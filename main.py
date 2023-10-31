@@ -33,5 +33,3 @@ while decision:
     print(f"The case is: {user_case_result}")
 
     decision = input_handler.get_user_decision('Try another one?')
-
-
