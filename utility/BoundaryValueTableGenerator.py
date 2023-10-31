@@ -23,3 +23,9 @@ class BoundaryValueTableGenerator:
             })
 
         return table
+
+    @staticmethod
+    def print_table(table):
+        print("Boundary Value Table:")
+        for entry in table:
+            print(entry)

@@ -26,5 +26,5 @@ class EquationParser:
 
     def get_parsed_values(self, equation_str):
         lhs_value, rhs_value = self.parse_equation(equation_str)
-        unique_symbols = self.get_unique_symbols(lhs_value);
+        unique_symbols = self.get_unique_symbols(lhs_value)
         return lhs_value, rhs_value, unique_symbols
