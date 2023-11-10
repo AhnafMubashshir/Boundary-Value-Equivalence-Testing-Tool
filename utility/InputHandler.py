@@ -20,7 +20,7 @@ class InputHandler:
 
     @staticmethod
     def get_equation():
-        return input("Enter an equation (e.g., '4*n + x - y = 13'): ")
+        return input("Enter an equation (e.g., '4*x + x*x + tan(x) + log(10) + 1 = 13'): ")
 
     def get_user_case(self, unique_symbols):
         user_case = []
