@@ -19,7 +19,7 @@ class BoundaryValueTableGenerator:
                 'Max-': max_minus,
                 'Max+': max_plus,
                 'Min-': min_minus,
-                'Nominal': nominal
+                'Nominal': nominal,
             })
 
         return table
