@@ -123,11 +123,11 @@ class BVA:
                 result = eval(equation, values)
                 if math.isinf(result) or math.isnan(result):
                     raise ValueError("Math domain error")
-                return str(result)
+                return str(result), True
             except (ValueError, ZeroDivisionError):
-                return "Value Error"
+                return "Value Error", False
         else:
-            return result
+            return result, False
 
     def get_results(self, cases, bva_table, equation_str):
         valid_test_case_result = []
@@ -135,8 +135,11 @@ class BVA:
         for case in cases:
             result = self.check_range(case, bva_table)
             if result == True:
-                output = self.get_outuput(case, equation_str)
-                valid_test_case_result.append({'Output': output, 'Case': case})
+                output, valid = self.get_outuput(case, equation_str)
+                if valid: 
+                    valid_test_case_result.append({'Output': output, 'Case': case})
+                else:
+                    invalid_test_case_result.append({'Output': output, 'Case': case})
             else:
                 invalid_test_case_result.append(
                     {'Output': 'Invalid', 'Case': case})
@@ -145,11 +148,22 @@ class BVA:
 
     @staticmethod
     def print_test_cases(case_name, cases):
+        tan_symbol = "tan"
+        cot_symbol = "cot"
+        sin_symbol = "sin"
+        cos_symbol = "cos"
+        sec_symbol = "sec"
+        cosec_symbol = "cosec"
+
         print(case_name, ' cases:')
         for i, case in enumerate(cases, start=1):
             case_details = ''
             for variable in case['Case']:
-                case_details = case_details + \
-                    variable['Symbol'] + '=' + str(variable['Value']) + ' '
+                if (tan_symbol or cot_symbol or sin_symbol or cos_symbol or sec_symbol or cosec_symbol) in variable['Symbol']:
+                    case_details = case_details + \
+                        variable['Symbol'] + '=' + str(round(math.degrees(variable['Value']))) + ' '
+                else:
+                    case_details = case_details + \
+                        variable['Symbol'] + '=' + str(variable['Value']) + ' '
             print(
                 f"Test-Case-id {i}: {case_details}, result: {case['Output']}")
