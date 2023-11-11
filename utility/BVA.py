@@ -6,23 +6,23 @@ import re
 class BVA:
     def validate_log(self, x):
         if x <= 0:
-            raise ValueError("Logarithm value must be greater than 0. ")
+            raise ValueError("Value Error")
 
     def validate_tan(self, x):
         if round(math.degrees(x)) % (360) == 90 or round(math.degrees(x)) % (360) == 270:
-            raise ValueError("Tangent value cannot be the result of multiplying 90 degree by an odd number. ")
+            raise ValueError("Value Error")
 
     def validate_cot(self, x):
         if round(math.degrees(x)) % (180) == 0:
-            raise ValueError("Cotangent value cannot be an integer multiple of 180 degree. ")
+            raise ValueError("Value Error")
 
     def validate_sec(self, x):
         if round(math.degrees(x)) % (360) == 90 or round(math.degrees(x)) % (360) == 270:
-            raise ValueError("Secant value cannot be the result of multiplying 90 degree by an odd number. ")
+            raise ValueError("Value Error")
 
     def validate_cosec(self, x):
         if round(math.degrees(x)) % (180) == 0:
-            raise ValueError("Cosecant value cannot be an integer multiple of 180 degree. ")
+            raise ValueError("Value Error")
 
     @staticmethod
     def get_all_combinations(table):
@@ -66,7 +66,7 @@ class BVA:
                     try:
                         self.validate_log(variable['Value'])
                     except ValueError as ve:
-                        error += str(ve)
+                        error = str(ve)
 
         if tan_match:
             for var in tan_match:
@@ -74,7 +74,7 @@ class BVA:
                     try:
                         self.validate_tan(variable['Value'])
                     except ValueError as ve:
-                        error += str(ve)
+                        error = str(ve)
 
         if cot_match:
             for var in cot_match:
@@ -82,7 +82,7 @@ class BVA:
                     try:
                         self.validate_cot(variable['Value'])
                     except ValueError as ve:
-                        error += str(ve)
+                        error = str(ve)
 
         if cosec_match:
             for var in cosec_match:
@@ -90,7 +90,7 @@ class BVA:
                     try:
                         self.validate_cosec(variable['Value'])
                     except ValueError as ve:
-                        error += str(ve)
+                        error = str(ve)
 
         if sec_match:
             for var in sec_match:
@@ -98,7 +98,7 @@ class BVA:
                     try:
                         self.validate_sec(variable['Value'])
                     except ValueError as ve:
-                        error += str(ve)
+                        error = str(ve)
 
         return error
     
@@ -118,15 +118,12 @@ class BVA:
             globals()[variable['Symbol']] = variable["Value"]
             values[variable['Symbol']] = variable["Value"]
 
-        if result == '':
-            try:
-                result = eval(equation, values)
-                if math.isinf(result) or math.isnan(result):
-                    raise ValueError("Math domain error")
-                return str(result), True
-            except (ValueError, ZeroDivisionError):
-                return "Value Error", False
-        else:
+        try:
+            result = eval(equation, values)
+            if math.isinf(result) or math.isnan(result):
+                raise ValueError("Math domain error")
+            return str(result), True
+        except (ValueError, ZeroDivisionError):
             return result, False
 
     def get_results(self, cases, bva_table, equation_str):
@@ -142,7 +139,7 @@ class BVA:
                     invalid_test_case_result.append({'Output': output, 'Case': case})
             else:
                 invalid_test_case_result.append(
-                    {'Output': 'Invalid', 'Case': case})
+                    {'Output': 'Out of Range Error', 'Case': case})
 
         return valid_test_case_result, invalid_test_case_result
 
