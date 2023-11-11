@@ -51,7 +51,7 @@ class BVA:
                     return False
 
         return True
-    
+
     def validate_variable_values(self, variable, equation):
         error = ''
         log_match = re.findall(r'log\((.*?)\)', equation)
@@ -101,7 +101,7 @@ class BVA:
                         error = str(ve)
 
         return error
-    
+
     def replace_trig_functions(self, match):
         function = match.group(1)
         return f"math.{function}("
@@ -133,10 +133,12 @@ class BVA:
             result = self.check_range(case, bva_table)
             if result == True:
                 output, valid = self.get_outuput(case, equation_str)
-                if valid: 
-                    valid_test_case_result.append({'Output': output, 'Case': case})
+                if valid:
+                    valid_test_case_result.append(
+                        {'Output': output, 'Case': case})
                 else:
-                    invalid_test_case_result.append({'Output': output, 'Case': case})
+                    invalid_test_case_result.append(
+                        {'Output': output, 'Case': case})
             else:
                 invalid_test_case_result.append(
                     {'Output': 'Out of Range Error', 'Case': case})
@@ -156,9 +158,11 @@ class BVA:
         for i, case in enumerate(cases, start=1):
             case_details = ''
             for variable in case['Case']:
-                if (tan_symbol or cot_symbol or sin_symbol or cos_symbol or sec_symbol or cosec_symbol) in variable['Symbol']:
+                if ((tan_symbol in variable['Symbol']) or (cot_symbol in variable['Symbol']) or (sin_symbol in variable['Symbol']) or
+                        (cos_symbol in variable['Symbol']) or (sec_symbol in variable['Symbol']) or (cosec_symbol in variable['Symbol'])):
                     case_details = case_details + \
-                        variable['Symbol'] + '=' + str(round(math.degrees(variable['Value']))) + ' '
+                        variable['Symbol'] + '=' + \
+                        str(round(math.degrees(variable['Value']))) + ' '
                 else:
                     case_details = case_details + \
                         variable['Symbol'] + '=' + str(variable['Value']) + ' '

@@ -8,8 +8,8 @@ class InputHandler:
         for symbol in unique_symbols:
             print('\n')
             if re.search(r'(tan|cos|sin)', symbol):
-                low = float(input(f"Enter the value in degrees for symbol '{symbol}': "))
-                high = float(input(f"Enter the value in degrees for symbol '{symbol}': "))
+                low = float(input(f"Enter the low boundary value in degrees for symbol '{symbol}': "))
+                high = float(input(f"Enter the high boundary value in degrees for symbol '{symbol}': "))
                 boundary_values[symbol] = {'low': math.radians(low), 'high': math.radians(high)}
             else:
                 low = float(input(f"Enter the low boundary value for symbol '{symbol}': "))

@@ -18,6 +18,7 @@ boundary_value_table_generator = BoundaryValueTableGenerator()
 
 boundary_value_table = boundary_value_table_generator.generate_table(unique_symbols, boundary_values)
 
+print('\n')
 boundary_value_table_generator.print_table(boundary_value_table)
 
 test_cases = bva.get_all_combinations(boundary_value_table)

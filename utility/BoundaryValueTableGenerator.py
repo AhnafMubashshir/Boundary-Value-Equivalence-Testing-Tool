@@ -20,7 +20,8 @@ class BoundaryValueTableGenerator:
             min_plus = 0
             min_minus = 0
 
-            if (tan_symbol or cot_symbol or sin_symbol or cos_symbol or sec_symbol or cosec_symbol) in symbol:
+            if ((tan_symbol in symbol) or (cot_symbol in symbol) or (sin_symbol in symbol) or
+                    (cos_symbol in symbol) or (sec_symbol in symbol) or (cosec_symbol in symbol)):
                 min_plus = math.radians(round(math.degrees(low))+1)
                 max_minus = math.radians(round(math.degrees(high))-1)
                 max_plus = math.radians(round(math.degrees(high))+1)
