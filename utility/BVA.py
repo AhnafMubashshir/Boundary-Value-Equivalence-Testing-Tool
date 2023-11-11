@@ -6,23 +6,23 @@ import re
 class BVA:
     def validate_log(self, x):
         if x <= 0:
-            raise ValueError("Value Error")
+            raise ValueError("Math Domain Error")
 
     def validate_tan(self, x):
         if round(math.degrees(x)) % (360) == 90 or round(math.degrees(x)) % (360) == 270:
-            raise ValueError("Value Error")
+            raise ZeroDivisionError("Math Domain Error")
 
     def validate_cot(self, x):
         if round(math.degrees(x)) % (180) == 0:
-            raise ValueError("Value Error")
+            raise ZeroDivisionError("Math Domain Error")
 
     def validate_sec(self, x):
         if round(math.degrees(x)) % (360) == 90 or round(math.degrees(x)) % (360) == 270:
-            raise ValueError("Value Error")
+            raise ZeroDivisionError("Math Domain Error")
 
     def validate_cosec(self, x):
         if round(math.degrees(x)) % (180) == 0:
-            raise ValueError("Value Error")
+            raise ZeroDivisionError("Math Domain Error")
 
     @staticmethod
     def get_all_combinations(table):
@@ -73,32 +73,32 @@ class BVA:
                 if variable["Symbol"] == var:
                     try:
                         self.validate_tan(variable['Value'])
-                    except ValueError as ve:
-                        error = str(ve)
+                    except ZeroDivisionError as ze:
+                        error = str(ze)
 
         if cot_match:
             for var in cot_match:
                 if variable["Symbol"] == var:
                     try:
                         self.validate_cot(variable['Value'])
-                    except ValueError as ve:
-                        error = str(ve)
+                    except ZeroDivisionError as ze:
+                        error = str(ze)
 
         if cosec_match:
             for var in cosec_match:
                 if variable["Symbol"] == var:
                     try:
                         self.validate_cosec(variable['Value'])
-                    except ValueError as ve:
-                        error = str(ve)
+                    except ZeroDivisionError as ze:
+                        error = str(ze)
 
         if sec_match:
             for var in sec_match:
                 if variable["Symbol"] == var:
                     try:
                         self.validate_sec(variable['Value'])
-                    except ValueError as ve:
-                        error = str(ve)
+                    except ZeroDivisionError as ze:
+                        error = str(ze)
 
         return error
 
@@ -120,11 +120,13 @@ class BVA:
 
         try:
             result = eval(equation, values)
-            if math.isinf(result) or math.isnan(result):
-                raise ValueError("Math domain error")
+            if math.isinf(result) or math.isnan(result) or result > 1e15:
+                return "Math Domain Error", False
             return str(result), True
-        except (ValueError, ZeroDivisionError):
-            return result, False
+        except ValueError as ve:
+            return "Math Domain Error", False
+        except ZeroDivisionError as ze:
+            return "Math Domain Error", False
 
     def get_results(self, cases, bva_table, equation_str):
         valid_test_case_result = []
@@ -168,3 +170,4 @@ class BVA:
                         variable['Symbol'] + '=' + str(variable['Value']) + ' '
             print(
                 f"Test-Case-id {i}: {case_details}, result: {case['Output']}")
+# cot(x)*y + log(y) + y*sin(z) + 1 = 0
