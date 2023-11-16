@@ -106,7 +106,7 @@ class BVA:
         function = match.group(1)
         return f"math.{function}("
 
-    def get_outuput(self, case, equation):
+    def get_output(self, case, equation):
         result = ''
         equation = str(equation)
         pattern = r'\b(tan|sin|cos|log)\s*\('
@@ -134,7 +134,7 @@ class BVA:
         for case in cases:
             result = self.check_range(case, bva_table)
             if result == True:
-                output, valid = self.get_outuput(case, equation_str)
+                output, valid = self.get_output(case, equation_str)
                 if valid:
                     valid_test_case_result.append(
                         {'Output': output, 'Case': case})
